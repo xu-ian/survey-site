@@ -1,0 +1,17 @@
+<form id="response-creation-form" class="card m-2" (submit)="makeResponse($event)" ngNativeValidate>
+  <div class="form-group m-2">
+    <label id="response-id-label">Enter the id of the survey you wish to answer</label>
+    <input id="response-id-input" class="form-control" type="text" required/>
+  </div>
+  <button class="btn btn-primary m-2" type="submit">Generate new response</button>
+</form>
+<div class="card m-2">
+  <div class="m-2 fs-3">Your Responses:</div>
+  <div *ngFor="let response of responses" [id]="response.id" class="card m-2">
+    <div class="card-header">{{response.surveyName}}</div>
+    <div class="row m-2">
+      <button class="col btn btn-primary m-2" (click)="startResponse(response.id)" >{{surveyButtonName(response.answers)}}</button>
+      <button class="col btn btn-danger m-2" (click)="removeResponse(response.id)">Remove Response</button>
+    </div>
+  </div>
+</div>

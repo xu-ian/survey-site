@@ -1,0 +1,72 @@
+<button class="btn btn-secondary m-2" (click)="returnToMain()">Back to Surveys</button>
+<form class="card mx-2" id="question-form" (ngSubmit)="addQuestion($event)">
+  <div class="form-group m-2">
+    <label id="question-name-label" for="question-name">Enter the new question here</label>
+    <input id="question-name" class="form-control" aria-labelledby="question-name-label" type="text"/> 
+  </div>
+  <div class="form-group m-2">
+    <label id="question-type-label" for="question-type">Pick the type of answer you want</label>
+    <select id="question-type" class="form-control" aria-labelledby="question-type-label">
+      <option *ngFor="let type of questionTypes" [ngValue]="type.name">{{type.name}}</option>
+    </select>
+  </div>
+  <div class="text-center">
+    <button id="question-create" class="btn btn-primary my-2 w-50" type="submit">Create new question</button>
+  </div>
+</form>
+<div id="survey-display">
+  <div class="row align-middle" *ngFor="let question of survey">
+    <div class="col-11">
+      <div id="question.id" class=" card m-2 p-2">
+        <div class="row my-2" *ngIf="!question.qedit; else elseBlock">
+          <div class="col">{{question.name}}</div>
+          <button class=" btn btn-secondary col-1 mx-2" (click)="swapEdit(question)">Edit</button>
+        </div>
+        <ng-template #elseBlock>
+          <div class="row justify-content-between my-2">
+            <input class="col-10 mx-2" [(ngModel)]="question.name" />
+            <div class="col-1">
+              <button class="btn btn-secondary mx-2" (click)="swapEdit(question)">Done</button>
+            </div>
+          </div>
+        </ng-template>
+        <div class="row my-2" *ngIf="!question.tedit; else elseBlock2">
+          <div class="col">{{question.type}}</div>
+          <button class="btn btn-secondary col-1 mx-2" (click)="swapTEdit(question)">Edit</button>
+        </div>
+        <ng-template #elseBlock2>
+          <div class="row justify-content-between my-2">
+            <select class="col-10 mx-2" [(ngModel)]="question.type">
+              <option *ngFor="let type of questionTypes" [ngValue]="type.name">{{type.name}}</option>
+            </select>
+            <div class="col-1">
+              <button class="btn btn-secondary mx-2" (click)="swapTEdit(question)">Done</button>
+            </div>
+          </div>
+        </ng-template>
+        <div class="row my-2" *ngIf="isAdditionalData(question.type) && !question.aedit">
+          <div class="col">{{question.additionalData}}</div>
+          <button class="btn btn-secondary col-1 mx-2" (click)="swapAEdit(question)">Edit</button>
+        </div>
+        <div *ngIf="isAdditionalData(question.type) && question.aedit" #elseBlock3>
+          <div class="row justify-content-between my-2">
+            <label>Multiple Choice Format(A,B,C,...), Rating Scale Format(min-max)</label>
+            <input class="col-10 mx-2" [(ngModel)]="question.additionalData" />
+            <div class="col-1">
+              <button class="btn btn-secondary mx-2" placeholder="choice 1,choice2,choice 3,choice4" (click)="swapAEdit(question)">Done</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1">
+      <div *ngIf="question.position!=1">
+        <button  class="btn btn-secondary w-75 m-2" (click)="swapQuestionUp(question.position)">up</button>
+      </div>
+      <div *ngIf="question.position != survey.length">
+        <button class="btn btn-secondary w-75 m-2" (click)="swapQuestionDown(question.position)">down</button>
+      </div>
+      <button class="btn btn-danger w-75 m-2" (click)="removeQuestion(question.id)">delete</button>
+    </div>
+  </div>
+</div>

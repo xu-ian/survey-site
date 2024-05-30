@@ -1,0 +1,30 @@
+<form id="survey-creation" class="card m-2" (submit)="newSurvey($event)" ngNativeValidate>
+  <div class="form-group m-2">
+    <label id="survey-name-input-label" for="survey-name-input">Name of Survey</label>
+    <input id="survey-name-input" [(ngModel)]="name" name="survey-name" class="form-control" aria-labelledby="survey-name-input-label" placeholder="ExampleSurveyName" type="text" required/>
+  </div>
+  <button id="create-survey-button" class="m-2 btn btn-primary" type="submit">Create new survey</button>
+</form>
+<div class="card">
+  <div id="surveys" class="row">
+    <div id="{{survey.id}}" class="col-4 card" *ngFor="let survey of surveys" >
+      <div class="row m-2">{{survey.name}}</div>
+      <div class="row m-2">
+        <div class="col">
+          <button class="btn btn-primary" (click)="editSurveyNav(survey.id)">Edit</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" (click)="responseSurveyNav(survey.id)">View Responses</button>
+        </div>
+      </div>
+      <div class="row m-2">
+        <div class="col">
+          <button class="btn btn-secondary" (click)="copyToClipboard(survey.id)">Copy link to clipboard</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-danger" (click)="deleteSurvey(survey.id)">Delete Survey</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

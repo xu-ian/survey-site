@@ -1,0 +1,38 @@
+<div id="question.question.id" *ngFor="let question of survey" class="card m-2">
+  <div class="row m-2 fs-3">{{question.question.name}}</div>
+  <div class="form-group m-2" *ngIf="question.question.type == 'Short Answer'">
+    <input class="m-1 form-control" type="text" [(ngModel)]="question.answer"/>
+  </div>
+  <div class="form-group m-2" *ngIf="question.question.type == 'Long Answer'">
+    <textarea class="m-1 form-control" [(ngModel)]="question.answer" rows="5"></textarea>
+  </div>
+  <div *ngIf="question.question.type == 'Multiple Choice(single)'">
+    <div class="m-2 form-check" *ngFor="let choice of getMultipleChoice(question.question.additionalData)">
+      <input id="{{question.question.id}}-choice" class="form-check-input" type="radio" name="question.question.id" [(ngModel)]="question.answer" [value]="choice">
+      <label class="form-check-label" for="{{question.question.id}}-choice">
+        {{choice}}
+      </label>
+    </div>
+  </div>
+  <div class="m-2" *ngIf="question.question.type == 'Multiple Choice(multiple)'">
+    <div class="form-check" *ngFor="let choice of getMultipleChoice(question.question.additionalData)">
+      <input id="{{question.question.id}}-choice" class="form-check-input" type="checkbox" [checked]="getValue(question, choice)" (click)="setValue(question, choice)" [value]="choice">
+      <label class="form-check-label" for="{{question.question.id}}-choice">
+        {{choice}}
+      </label>
+    </div>
+  </div>
+  <div *ngIf="question.question.type == 'Rating Scale'">
+    <div class="mx-2">
+      <input type="range" class="form-range" [(ngModel)]="question.answer" [min]="getMin(question.question.additionalData)" [max]="getMax(question.question.additionalData)">
+    </div>
+    <div class="row justify-content-between mx-1">
+      <div class="col text-start">{{getMin(question.question.additionalData)}}</div>
+      <div class="col text-end">{{getMax(question.question.additionalData)}}</div>  
+    </div>
+    <div class="m-2">Chosen Value: {{question.answer}}</div>
+  </div>
+</div>
+<div class="row justify-content-center m-2">
+  <button class="btn btn-primary col" (click)="submitResponse($event)">Submit</button>
+</div>

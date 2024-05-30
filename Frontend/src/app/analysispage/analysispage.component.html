@@ -1,0 +1,36 @@
+<h1 *ngIf="!exists">
+  No Responses
+</h1>
+<div *ngIf="exists">
+  <button class="btn btn-outline-primary m-2"(click)="goBack()" >Back</button>
+  <div *ngFor="let response of responses" [id]="response.id" class="card m-2">
+    <div class="card-header">{{response.question}}</div>
+    <div class="card-body">
+      <div *ngIf="response.type == 'Rating Scale'">
+        <div *ngFor="let answer of response.answers" class="m-2">
+          {{answer}}
+        </div>
+      </div>
+      <div *ngIf="response.type == 'Multiple Choice(single)'">
+        <div *ngFor="let answer of response.answers" class="m-2">
+          {{answer}}
+        </div>
+      </div>
+      <div *ngIf="response.type == 'Multiple Choice(multiple)'">
+        <div *ngFor="let answer of response.answers" class="m-2">
+          {{answer}}
+        </div>
+      </div>
+      <div *ngIf="response.type == 'Short Answer'">
+        <div *ngFor="let answer of response.answers" class="m-2">
+          {{answer}}
+        </div>
+      </div>
+      <div *ngIf="response.type == 'Long Answer'">
+        <div *ngFor="let answer of response.answers" class="m-2">
+          {{answer}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

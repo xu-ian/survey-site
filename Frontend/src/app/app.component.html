@@ -1,0 +1,21 @@
+<main class="main">  
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li *ngIf="isLoggedIn()" class="nav-item">
+          <a class="nav-link active" routerLink="/survey" routerLinkActive="active" ariaCurrentWhenActive="page">My Surveys</a>
+        </li>
+        <li *ngIf="isLoggedIn()" class="nav-item">
+          <a class="nav-link active" routerLink="/response" routerLinkActive="active" ariaCurrentWhenActive="page">My Survey Responses</a>
+        </li>
+        <li *ngIf="!isLoggedIn()" class="nav-item">
+          <a class="nav-link active" routerLink="/auth" routerLinkActive="active" ariaCurrentWhenActive="page">Log In/Sign Up</a>
+        </li>
+        <li *ngIf="isLoggedIn()" class="nav-item">
+          <button class="nav-link active" (click)="logout()">Log out</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</main>

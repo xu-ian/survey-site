@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <div [class]="login" (click)="setLogin()">Log in</div>
+      </li>
+      <li class="nav-item">
+        <div [class]="signup" (click)="setSignup()">Sign Up</div>
+      </li>
+    </ul>
+  </div>
+  <form class="card-body" (ngSubmit)="authenticate()" ngNativeValidate>
+    <div *ngIf="errorExists" class="m-2 text-danger">{{errorMessage}}</div>
+    <div class="form-group m-2">
+      <label for="username-input">Username:</label>
+      <input id="username-input" class="form-control" type="text" required/>
+    </div>
+    <div class="form-group m-2">
+      <label for="password-input">Password:</label>
+      <input id="password-input" class="form-control" type="password" required/>
+    </div>
+    <button class="btn btn-primary m-2" type="submit">{{state}}</button>
+  </form>
+</div>
